@@ -68,6 +68,11 @@ def main() -> int:
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(line)
+    # Read-back check: the file the judge reads must be exactly the line.
+    with open("/output/entry.txt", encoding="utf-8") as f:
+        if f.read() != line:
+            print("entry.txt read-back mismatch", file=sys.stderr)
+            return 1
     try:
         with open("entry.txt", "w", encoding="utf-8") as f:
             f.write(line)
